@@ -10,7 +10,6 @@ bdist-mpkg==0.4.4
 factual-api==1.6.0
 itsdangerous==0.24
 macholib==1.5
-matplotlib==1.1.1
 modulegraph==0.10.1
 numpy==1.6.2
 oauthlib==0.6.3
