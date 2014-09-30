@@ -1,0 +1,9 @@
+html, body {
+    background-color: #f8f8f8;
+}
+
+#map-canvas {
+  position: absolute;
+  height: calc(100% - 51px);
+  width: calc(100% - 250px);
+}
