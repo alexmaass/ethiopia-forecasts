@@ -3,9 +3,13 @@ html, body {
     /*background-color: transparent;*/
 }
 
+#side-menu {
+  margin-top: 50px;
+}
+
 #map-canvas {
-  height: calc(100% - 51px);
-  width: calc(100% - 250px);
+  height: 100%;
+  width: calc(100% - 300px);
   background: transparent url(../img/loading_clear.gif) no-repeat center center;
   position: absolute;
 }
