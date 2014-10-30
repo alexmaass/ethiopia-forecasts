@@ -1,9 +1,11 @@
 html, body {
     background-color: #f8f8f8;
+    /*background-color: transparent;*/
 }
 
 #map-canvas {
-  position: absolute;
   height: calc(100% - 51px);
   width: calc(100% - 250px);
+  background: transparent url(../img/loading_clear.gif) no-repeat center center;
+  position: absolute;
 }
