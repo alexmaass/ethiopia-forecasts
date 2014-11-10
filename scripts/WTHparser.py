@@ -65,6 +65,7 @@ for date in sorted(dates):
       if weights[weightIndex] > 0.0:
         values = valuemap[(date,weightIndex)]
         for i in range(0, len(values)):
+          # Rounds the values to two decimal places
           averagedValues[i] = round(averagedValues[i] + weights[weightIndex]*values[i], 2)
     outputmap[(date, waredaID)] = averagedValues
 
