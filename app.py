@@ -3,11 +3,11 @@ from flask import Flask, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/amaass'
-db = SQLAlchemy(app)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/amaass'
+# db = SQLAlchemy(app)
 
-@application.route('/')
-@application.route('/index.html')
+@app.route('/')
+@app.route('/index.html')
 def main():
   return render_template('index.html')
 
