@@ -1,9 +1,13 @@
 /**
 * Map Rendering and Interface Javascript
+* Feature properties: 
+* "EASE_W6ID":10102,"name":"Tahtay Adiyabo","REGION_R2I":1,"W_NAME":"Tahtay Adiyabo","styleUrl":"#PolyStyle00","EASE_Wored":"Tahtay Adiyabo","W6ID":10102,
+* "Area_km2":3911.757416,"styleHash":"-6104f216","LONG":37.793356,"FID":0,"EASE_ZoneN":"Western Tigray","LAT":14.42934,"EASE_Z4ID":101
 */
 var infoWindow;
 var geoJsonObjects;
 var infowindow;
+var date = "2000-01-01";
 
 // Loading of the wareda map
 $(document).ready(function(){
@@ -43,6 +47,19 @@ $(document).ready(function(){
   map.data.addListener('click', function(event) {
     // event.feature.setProperty('isColorful', true);
     var name = event.feature.getProperty('name');
+    // Make an ajax call to get back relevant content
+    // $.ajax({
+    //   url: "/addLocation",
+    //   type: "POST",
+    //   data: {
+    //     date: loc,
+    //     cost: cos
+    //   },
+    //   success: function(result){
+    //     location.reload();
+    //   }
+    // });
+    // Set window content
     infowindow.setContent(name);
     infowindow.setPosition(event.latLng);
     infowindow.open(map);
@@ -62,7 +79,7 @@ $(document).ready(function(){
   map.data.addListener('mouseout', function(event) {
     map.data.revertStyle();
   });
-});
+});  
 
 //Experimental KML rendering
 // var waredaLayer = new google.maps.KmlLayer({

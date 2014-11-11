@@ -4,9 +4,12 @@ import datetime
 import csv
 import time
 
+import psycopg2
+
 start_time = time.time()
-weights_filename = "AgMERRA_WeightMatrix.csv"
-output_filename = "AgMERRA_averaged_rounded2.csv"
+data_directory = "../data/Weather_Data/AgMERRA_SSA/"
+weights_filename = data_directory + "AgMERRA_WeightMatrix.csv"
+output_filename = "AgMERRA_db_test.csv"
 
 valuemap = {}
 weightmap = {}
@@ -46,7 +49,8 @@ for line in weights_lines[1:]:
 
 # Iterate over all files in the current directory
 index = 0
-for f in sorted(os.listdir('.')):
+for f in sorted(os.listdir(data_directory)):
+  f = data_directory + f
   # If f is a file and has the .WTH extension, parse it
   if os.path.isfile(f) and fnmatch.fnmatch(f, '*.WTH'):
     parseWTH(f, index)
@@ -65,18 +69,51 @@ for date in sorted(dates):
       if weights[weightIndex] > 0.0:
         values = valuemap[(date,weightIndex)]
         for i in range(0, len(values)):
-          # Rounds the values to two decimal places
-          averagedValues[i] = round(averagedValues[i] + weights[weightIndex]*values[i], 2)
+          # averagedValues[i] = averagedValues[i] + weights[weightIndex]*values[i]
+          # Rounds the values to six decimal places to fit in real DB type
+          averagedValues[i] = round(averagedValues[i] + weights[weightIndex]*values[i], 6)
     outputmap[(date, waredaID)] = averagedValues
+print "Actual number of rows: " + str(len(outputmap))
+
+# Upload outputmap to PostgresDB
+# conn = psycopg2.connect("host=localhost port=5432 user=amaass dbname=amaass");
+# cur = conn.cursor()
+# # Create the table
+# crt_query = "CREATE TABLE IF NOT EXISTS weather_agmerra(\
+#      date   DATE,\
+#      wareda INT,\
+#      srad   REAL,\
+#      tmax   REAL,\
+#      tmin   REAL,\
+#      rain   REAL,\
+#      wind   REAL\
+#   );"
+# cur.execute(crt_query);
+# # Inserts
+# ins_query = "INSERT INTO weather_agmerra (date, wareda, srad, tmax, tmin, rain, wind)\
+#          VALUES (%s, %s, %s, %s, %s, %s, %s);"
+# counter = 0
+# for k,v in outputmap.iteritems():
+#   k+=1;
+#   out = [k[0],k[1]] + v
+#   data = tuple(out)
+#   cur.execute(ins_query, data)
+#   if k % 1000 == 0:
+#     print k
+# conn.commit()
+# cur.close()
+# conn.close()
 
 # Write outputmap to disk
-print "Actual number of rows: " + str(len(outputmap))
 with open(output_filename, 'wb') as outputfile:
-  wr = csv.writer(outputfile, quoting=csv.QUOTE_ALL)
+  # wr = csv.writer(outputfile, quoting=csv.QUOTE_ALL)
+  wr = csv.writer(outputfile)
   for k,v in outputmap.iteritems():
     out = [k[0],k[1]] + v
-    # out = k + v
+    # Out has format DATE,EASE6_ID,SRAD,TMAX,TMIN,RAIN,WIND
     wr.writerow(out)
+
+# Track time
 print str(time.time() - start_time)
 
 
