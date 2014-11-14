@@ -11,6 +11,7 @@
     <title>AgroEthiopia</title>
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins/bootstrap.min.css') }}"> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins/metisMenu/metisMenu.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome-4.1.0/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins/jquery.sidr.light.css') }}">
@@ -36,7 +37,7 @@
             <!-- /.navbar-header -->
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
-                <a class="navbar-brand" href="index.html">AgroEthiopia</a>
+                <a class="navbar-brand" id="testing-brand">AgroEthiopia</a>
                 <ul class="nav" id="side-menu">
 
                     <!-- <li class="sidebar-search">
@@ -157,6 +158,8 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <!--script src="{{ url_for('static', filename='js/plugins/jquery-1.11.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plugins/bootstrap.min.js') }}"></script-->
     <script src="{{ url_for('static', filename='js/plugins/metisMenu/metisMenu.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/plugins/jquery.sidr.min.js') }}"></script>       
     <script src="{{ url_for('static', filename='js/sb-admin-2.js') }}"></script>

@@ -9,7 +9,7 @@ import psycopg2
 start_time = time.time()
 data_directory = "../data/Weather_Data/AgMERRA_SSA/"
 weights_filename = data_directory + "AgMERRA_WeightMatrix.csv"
-output_filename = "AgMERRA_db_test.csv"
+output_filename = "AgMERRA_db.csv"
 
 valuemap = {}
 weightmap = {}
@@ -80,6 +80,7 @@ print "Actual number of rows: " + str(len(outputmap))
 # cur = conn.cursor()
 # # Create the table
 # crt_query = "CREATE TABLE IF NOT EXISTS weather_agmerra(\
+#      id     INT,\        
 #      date   DATE,\
 #      wareda INT,\
 #      srad   REAL,\
@@ -108,10 +109,12 @@ print "Actual number of rows: " + str(len(outputmap))
 with open(output_filename, 'wb') as outputfile:
   # wr = csv.writer(outputfile, quoting=csv.QUOTE_ALL)
   wr = csv.writer(outputfile)
+  id = 1;
   for k,v in outputmap.iteritems():
-    out = [k[0],k[1]] + v
-    # Out has format DATE,EASE6_ID,SRAD,TMAX,TMIN,RAIN,WIND
+    out = [id,k[0],k[1]] + v
+    # Out has format ID,DATE,EASE6_ID,SRAD,TMAX,TMIN,RAIN,WIND
     wr.writerow(out)
+    id+=1
 
 # Track time
 print str(time.time() - start_time)

@@ -7,7 +7,11 @@
 var infoWindow;
 var geoJsonObjects;
 var infowindow;
-var date = "2000-01-01";
+var map;
+var datatype = "RAIN";
+var date = "1981-01-01";
+var json = null;
+var mapdata = null;
 
 // Loading of the wareda map
 $(document).ready(function(){
@@ -47,20 +51,14 @@ $(document).ready(function(){
   map.data.addListener('click', function(event) {
     // event.feature.setProperty('isColorful', true);
     var name = event.feature.getProperty('name');
-    // Make an ajax call to get back relevant content
-    // $.ajax({
-    //   url: "/addLocation",
-    //   type: "POST",
-    //   data: {
-    //     date: loc,
-    //     cost: cos
-    //   },
-    //   success: function(result){
-    //     location.reload();
-    //   }
-    // });
+    var ease_w6id = parseInt(event.feature.getProperty('EASE_W6ID'));
     // Set window content
     infowindow.setContent(name);
+    if (json != null && ease_w6id in json) {
+      var val = json[ease_w6id];
+      console.log(val);
+      infowindow.setContent(val.toString());
+    }
     infowindow.setPosition(event.latLng);
     infowindow.open(map);
   });
@@ -80,6 +78,22 @@ $(document).ready(function(){
     map.data.revertStyle();
   });
 });  
+
+$( "#testing-brand" ).click(function() {
+  // alert( "Handler for .click() called." );
+  // Make an ajax call to get back relevant content
+  $.ajax({
+    url: "/lookup",
+    type: "POST",
+    data: {
+      datatype: datatype,
+      date: date
+    },
+    success: function(result){
+      json = JSON && JSON.parse(result) || $.parseJSON(result);
+    }
+  });
+});
 
 //Experimental KML rendering
 // var waredaLayer = new google.maps.KmlLayer({
