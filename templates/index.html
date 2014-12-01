@@ -5,166 +5,121 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="A fertilizer usage profitability forecast tool for Ethiopian agriculture">
+    <meta name="author" content="Alex Maass">
 
     <title>AgroEthiopia</title>
 
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins/bootstrap.min.css') }}"> -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins/metisMenu/metisMenu.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome-4.1.0/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins/jquery.sidr.light.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/sb-admin-2.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/simple-sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/simple-sidebar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 
 <body>
+    <!-- Navbar -->
+<!--     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
+        <div class="container" id="navbar-container">
+            <span>
+                <button type="button" class="btn btn-default glyphicon glyphicon-cog" aria-hidden="true"></button>
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">AgroEthiopia</a>
+                </div>
+            </span>
+        </div>
+    </nav> -->
 
     <div id="wrapper">
-
-        <!-- Navigation -->
-        <!-- <nav class="navbar" role="navigation" style="margin-bottom: 0"> -->
-<!--             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">AgroEthiopia</a>
-            </div> -->
-            <!-- /.navbar-header -->
-        <div class="navbar-default sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-                <a class="navbar-brand" id="testing-brand">AgroEthiopia</a>
-                <ul class="nav" id="side-menu">
-
-                    <!-- <li class="sidebar-search">
-                        <div class="input-group custom-search-form">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                        </div>
-                    </li> -->
-<!-- 
-                    <li class="sidebar-search">
-                        <a class="navbar-brand" href="index.html">AgroEthiopia</a>
-                    </li> -->
-
-                    <li>
-                        <a href="index.html"><i class="fa fa-map-marker fa-fw"></i> Map</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="flot.html">Flot Charts</a>
-                            </li>
-                            <li>
-                                <a href="morris.html">Morris.js Charts</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                    </li>
-                    <li>
-                        <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="panels-wells.html">Panels and Wells</a>
-                            </li>
-                            <li>
-                                <a href="buttons.html">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="notifications.html">Notifications</a>
-                            </li>
-                            <li>
-                                <a href="typography.html">Typography</a>
-                            </li>
-                            <li>
-                                <a href="grid.html">Grid</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">Second Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Second Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-third-level -->
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                    <li class="active">
-                        <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a class="active" href="blank.html">Blank Page</a>
-                            </li>
-                            <li>
-                                <a href="login.html">Login Page</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                </ul>
-            </div>
-            <!-- /.sidebar-collapse -->
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <!-- Sidebar Header -->
+                <li class="sidebar-brand">
+                    <a href="#">
+                        <span id="brand-name">AgroEthiopia</span>
+                        <span id="resize-icon" class="glyphicon glyphicon-th-list"></span>
+                    </a>
+                </li>
+                <!-- Sidebar content -->
+                <li>
+                    <a id="map-menu"><span class="glyphicon glyphicon-map-marker"></span> Map
+                    </a>
+                    <div id="map-submenu" class="collapse in">
+                        <div><span class="glyphicon glyphicon-map-marker"></span> Map1 </div>          
+                        <div><span class="glyphicon glyphicon-map-marker"></span> Map2</div>
+                    </div>
+                </li>
+<!--                 <li>
+                    <a href="#"><span class="glyphicon glyphicon-map-marker"></span> Map
+                    </a>                    
+                    <a href="#"><span class="glyphicon glyphicon-map-marker"></span> Map
+                    </a>
+                </li> -->
+<!--                 <li>
+                    <div id="users" class="list-group subitem collapse in"> 
+                        <a href="#" class="list-group-item"> Users</a>
+                        <a href="#" class="list-group-item"> Create User</a>
+                        <a href="#" class="list-group-item"> Create Group</a>
+                </li> -->
+                <li>
+                    <a href="#">Overview</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
         </div>
-        <!-- /.navbar-static-side -->
-        <!-- </nav> -->
-
+        <!-- End Sidebar -->
         <!-- Page Content -->
-        <div id="page-wrapper">
-            <div class="col-lg-12" id="map-canvas"></div>
+        <div id="page-content-wrapper">
+            <div class="col-lg-12">
+                <div id="map-canvas" style="display:none;"></div>
+                <!-- <div id="loading-canvas"></div> -->
+                <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
+            </div>
         </div>
-        <!-- /#page-wrapper -->
 
+        <!-- <div class="col-lg-12" id="main-container">
+            <div id="map-canvas" style="display:none;"></div>
+            <div id="loading-canvas"></div>
+        </div> -->
+        <!-- End Page Content -->
     </div>
-    <!-- /#wrapper -->
+    <script src="{{ url_for('static', filename='js/plugins/jquery-1.11.1.min.js') }}"></script>       
+    <script src="{{ url_for('static', filename='js/plugins/bootstrap.min.js') }}"></script>   
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="http://d3js.org/topojson.v1.min.js"></script>
-    <!--script src="{{ url_for('static', filename='js/plugins/jquery-1.11.0.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/plugins/bootstrap.min.js') }}"></script-->
-    <script src="{{ url_for('static', filename='js/plugins/metisMenu/metisMenu.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/plugins/jquery.sidr.min.js') }}"></script>       
-    <script src="{{ url_for('static', filename='js/sb-admin-2.js') }}"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>   
+    <script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+    // $("#menu-toggle").click(function(e) {
+    //     e.preventDefault();
+    //     $("#wrapper").toggleClass("toggled");
+    // });
+    $("#resize-icon").click(function(e) {
+        e.preventDefault();
+        //$("#wrapper").toggleClass("toggled");
+        $("#wrapper").toggleClass("toggled").promise().done(function(e) {
+            google.maps.event.trigger(map,"resize");
+            console.log("should have resized");
+        });
+    });
+    $("#map-menu").click(function(e) {
+        e.preventDefault();
 
+        $(".collapse").collapse();
+    });
+
+    </script>
 </body>
 
 </html>

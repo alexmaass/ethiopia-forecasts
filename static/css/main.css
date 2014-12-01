@@ -1,15 +1,48 @@
 html, body {
-    background-color: #f8f8f8;
-    /*background-color: transparent;*/
+  width: 100%;
+  height: 100%;
+  background: #000;
 }
 
-#side-menu {
+/*#navbar {
+  border: 0;
+  margin-bottom: 0; 
+}*/
+
+/*#navbar-container {
+  margin-left: 0;
+}*/
+
+/*#main-container {
+  height: calc(100% - 50px);
+  width: 100%;
+  padding: 0 0 0 0;
+  position: absolute;
   margin-top: 50px;
+}*/
+
+#resize-icon{
+  float:right;
+  padding-right: 15px;
+  padding-top:20px;
+}
+
+.col-lg-12 {
+  padding: 0 0;
+  height: 100%;
 }
 
 #map-canvas {
   height: 100%;
-  width: calc(100% - 300px);
+  width: 100%;
+  background: transparent no-repeat center center;
+  position: relative;
+  z-index: 10;
+}
+
+#loading-canvas {
+  height: 100%;
+  width: 100%;
   background: transparent url(../img/loading_clear.gif) no-repeat center center;
-  position: absolute;
+  position: relative;
 }

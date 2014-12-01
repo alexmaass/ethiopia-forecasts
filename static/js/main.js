@@ -18,7 +18,7 @@ $(document).ready(function(){
   // Build the google maps base
   var myLatlng = new google.maps.LatLng(9.195761, 40.498867);
   var mapOptions = {
-    zoom: 6,
+    zoom: 7,
     center: myLatlng,
     mapTypeId: google.maps.MapTypeId.HYBRID,
     scaleControl: true,
@@ -77,23 +77,26 @@ $(document).ready(function(){
   map.data.addListener('mouseout', function(event) {
     map.data.revertStyle();
   });
+
+  // Load map div
+  $("#map-canvas").show();
 });  
 
-$( "#testing-brand" ).click(function() {
-  // alert( "Handler for .click() called." );
-  // Make an ajax call to get back relevant content
-  $.ajax({
-    url: "/lookup",
-    type: "POST",
-    data: {
-      datatype: datatype,
-      date: date
-    },
-    success: function(result){
-      json = JSON && JSON.parse(result) || $.parseJSON(result);
-    }
-  });
-});
+// $( "#testing-brand" ).click(function() {
+//   // alert( "Handler for .click() called." );
+//   // Make an ajax call to get back relevant content
+//   $.ajax({
+//     url: "/lookup",
+//     type: "POST",
+//     data: {
+//       datatype: datatype,
+//       date: date
+//     },
+//     success: function(result){
+//       json = JSON && JSON.parse(result) || $.parseJSON(result);
+//     }
+//   });
+// });
 
 //Experimental KML rendering
 // var waredaLayer = new google.maps.KmlLayer({
