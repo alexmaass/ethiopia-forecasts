@@ -63,7 +63,8 @@ class Weather(db.Model):
 @application.route('/')
 @application.route('/index.html')
 def main():
-  return render_template('index.html')
+  # return render_template('index.html')
+  return render_template('test.html')
 
 @application.route('/lookup', methods=['POST'])
 def lookup():
