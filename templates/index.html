@@ -11,23 +11,11 @@
     <title>AgroEthiopia</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/simple-sidebar.css') }}">
+<!--     <link rel="stylesheet" href="{{ url_for('static', filename='css/simple-sidebar.css') }}"> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 
 <body>
-    <!-- Navbar -->
-<!--     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
-        <div class="container" id="navbar-container">
-            <span>
-                <button type="button" class="btn btn-default glyphicon glyphicon-cog" aria-hidden="true"></button>
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">AgroEthiopia</a>
-                </div>
-            </span>
-        </div>
-    </nav> -->
-
     <div id="wrapper">
         <!-- Sidebar -->
         <div id="accordian">
@@ -36,27 +24,42 @@
                     <div id="brand"><span class="glyphicon glyphicon-tree-conifer"></span> AgroEthiopia</div>
                 </li>
                 <li>
+                    <div class="btn-group" role="group" id="mode-select">
+                        <button type="button" class="btn btn-default">Map</button>
+                        <button type="button" class="btn btn-default">Table</button>
+                    </div>
+                </li>
+                <li>
                     <h3><span class="glyphicon glyphicon-cloud"></span>Weather</h3>
                     <ul>
-                        <li>Date</li>
-                        <li>Measurement</li>
-                        <!-- <li><a href="#">Graphs</a></li> -->
-                        <!-- <li><a href="#">Settings</a></li> -->
-                    </ul>
-                </li>
-                <!-- we will keep this LI open by default -->
-                <li class="active">
-                    <h3><span class="icon-tasks"></span>Tasks</h3>
-                    <ul>
-                        <li><a href="#">Today's tasks</a></li>
-                        <li><a href="#">Urgent</a></li>
-                        <li><a href="#">Overdues</a></li>
-                        <li><a href="#">Recurring</a></li>
-                        <li><a href="#">Settings</a></li>
+                        <li>Date <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/01/1980"></input></li>
+                        <li>
+                            Field 
+                            <div class="btn-group field-select">
+                                <button type="button" class="btn btn-default dropdown-toggle btn-field-select" data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>Option 1</li>
+                                    <li>Another action</li>
+                                    <li>Something else here</li>
+                                </ul>
+                            </div>
+                        </li>
                     </ul>
                 </li>
                 <li>
-                    <h3><span class="icon-calendar"></span>Calendar</h3>
+                    <h3><span class="glyphicon glyphicon-globe"></span>Soil</h3>
+                    <ul>
+                        <li>Today's tasks</li>
+                        <li>Urgent</li>
+                        <li>Overdues</li>
+                        <li>Recurring</li>
+                        <li>Settings</li>
+                    </ul>
+                </li>
+                <li>
+                    <h3><span class="glyphicon glyphicon-usd"></span>Profitability</h3>
                     <ul>
                         <li><a href="#">Current Month</a></li>
                         <li><a href="#">Current Week</a></li>
@@ -69,45 +72,30 @@
                         <li><a href="#">Settings</a></li>
                     </ul>
                 </li>
-                <li>
-                    <h3><span class="icon-heart"></span>Favourites</h3>
-                    <ul>
-                        <li><a href="#">Global favs</a></li>
-                        <li><a href="#">My favs</a></li>
-                        <li><a href="#">Team favs</a></li>
-                        <li><a href="#">Settings</a></li>
-                    </ul>
-                </li>
             </ul>
         </div>
         <!-- End Sidebar -->
         <!-- Page Content -->
-        <div id="page-content-wrapper">
+<!--         <div id="page-content-wrapper">
             <div class="col-lg-12">
                 <div id="map-canvas" style="display:none;"></div>
                 <div id="loading-canvas"></div>
-                <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
             </div>
-        </div>
+        </div> -->
         <!-- End Page Content -->
     </div>
     <script src="{{ url_for('static', filename='js/plugins/jquery-1.11.1.min.js') }}"></script>       
     <script src="{{ url_for('static', filename='js/plugins/bootstrap.min.js') }}"></script>   
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>   
-    <!-- <script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script> -->
+    <script src="{{ url_for('static', filename='js/plugins/bootstrap-datepicker.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>
-        /*jQuery time*/
-        $("#accordian h3").click(function(){
-            //slide up all the link lists
-            $("#accordian ul ul").slideUp();
-            //slide down the link list below the h3 clicked - only if its closed
-            if(!$(this).next().is(":visible"))
-            {
-                $(this).next().slideDown();
-            }
-        })
+        // Datepicker JS
+        $('.datepicker').datepicker({
+            autoclose: true
+        });
+        $('.dropdown-toggle').dropdown();
     </script>
 </body>
 
