@@ -36,8 +36,7 @@ $(document).ready(function(){
         map.data.addGeoJson(geoJsonObjects); 
   }); 
 
-  // Color each letter gray. Change the color when the isColorful property
-  // is set to true.
+  // Color each wareda
   map.data.setStyle(function(feature) {
     // Determine the color needed
     var area = feature.getProperty('Area_km2');
@@ -58,9 +57,10 @@ $(document).ready(function(){
     // Set window content
     infowindow.setContent(name);
     if (json != null && ease_w6id in json) {
-      var val = json[ease_w6id];
+      var val = json[ease_w6id].toString();
+      val = name + ': ' + val; 
       console.log(val);
-      infowindow.setContent(val.toString());
+      infowindow.setContent(val);
     }
     infowindow.setPosition(event.latLng);
     infowindow.open(map);
@@ -82,13 +82,22 @@ $(document).ready(function(){
   });
 
   // Only show map after fully loaded
-  // $("#map-canvas").show();
-  // $("#loading-canvas").hide();
   google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
-    // do something only the first time the map is loaded
     $("#loading-canvas").hide();
   });
 });  
+
+
+//Helper functions for RGB to HEX (Courtesy of StackOverflow)
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
 
 // $( "#testing-brand" ).click(function() {
 //   // alert( "Handler for .click() called." );
