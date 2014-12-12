@@ -34,34 +34,43 @@
         <!-- Sections -->
         <li>
           <div class="section-header">
+            <span class="glyphicon glyphicon-usd"></span>Profitability
+          </div>
+          <ul class="section-list">
+            <li>Current Month</li>
+            <li>Current Week</li>
+            <li>Current Year</li>
+            <li>Next Month</li>
+            <li>Next Week</li>
+            <li>Next Year</li>
+          </ul>
+        </li>
+
+
+        <li>
+          <div class="section-header">
             <span class="glyphicon glyphicon-cloud"></span>Weather
           </div>
           <ul class="section-list">
-            <li>
-              Date 
-              <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/01/1980"></input>
-            </li>
-            <li>
-              Field 
-              <select class="form control weather-field-selector">
-                <option>Solar Rad.</option>
-                <option>Max Temp.</option>
-                <option>Min Temp.</option>
-                <option>Rain</option>
-                <option>Wind</option>
-                <option>5</option>
-              </select>  
-              <!-- <div class="btn-group weather-select">
-                <button type="button" class="btn btn-default dropdown-toggle weather-field-select" data-toggle="dropdown" aria-expanded="false">
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li>Option 1</li>
-                  <li>Another action</li>
-                  <li>Something else here</li>
-                </ul>
-              </div> -->
-            </li>
+            <form>
+              <li>
+                Date 
+                <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/01/1980" id="weather-datepicker"></input>
+              </li>
+              <li>
+                Variable 
+                <select class="form control variable-selector" id="weather-var-selector">
+                  <option>Solar Rad.</option>
+                  <option>Max Temp.</option>
+                  <option>Min Temp.</option>
+                  <option>Rain</option>
+                  <option>Wind</option>
+                </select>  
+              </li>
+              <li>
+                <button type="button" class="btn btn-default btn-submit" id="weather-submit">Submit</button>
+              </li>
+            </form>
           </ul>
         </li>
 
@@ -71,29 +80,23 @@
             <span class="glyphicon glyphicon-globe"></span>Soil
           </div>
           <ul class="section-list">
-            <li>Today's tasks</li>
-            <li>Urgent</li>
-            <li>Overdues</li>
-            <li>Recurring</li>
-            <li>Settings</li>
-          </ul>
-        </li>
-
-
-        <li>
-          <div class="section-header">
-            <span class="glyphicon glyphicon-usd"></span>Profitability
-          </div>
-          <ul class="section-list">
-            <li>Current Month</li>
-            <li>Current Week</li>
-            <li>Previous Month</li>
-            <li>Previous Week</li>
-            <li>Next Month</li>
-            <li>Next Week</li>
-            <li>Team Calendar</li>
-            <li>Private Calendar</li>
-            <li>Settings</li>
+            <li>
+              Date 
+              <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/01/1980"></input>
+            </li>
+            <li>
+              Variable 
+              <select class="form control variable-selector" id="soil-var-selector">
+                <option>Solar Rad.</option>
+                <option>Max Temp.</option>
+                <option>Min Temp.</option>
+                <option>Rain</option>
+                <option>Wind</option>
+              </select>  
+            </li>
+            <li>
+              <button type="button" class="btn btn-default btn-submit" id="soil-submit">Submit</button>
+            </li>
           </ul>
         </li>
       </ul>
@@ -115,11 +118,62 @@
   <script src="{{ url_for('static', filename='js/plugins/bootstrap-datepicker.js') }}"></script>
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   <script>
+    // Menu sliding
+    $("#sidebar .section-header").click(function(){
+        //slide up all the link lists
+        $("#sidebar ul .section-list").slideUp();
+        //slide down the link list below the h3 clicked - only if its closed
+        if(!$(this).next().is(":visible"))
+        {
+            $(this).next().slideDown();
+        }
+    })
+
     // Datepicker JS
     $('.datepicker').datepicker({
-      autoclose: true
+      autoclose: true,
+      clearBtn: true,
+      // startDate: new Date(1980, 1, 1),    // Fix this. Doesnt properly render January.
+      // endDate: new Date(2010, 12, 31),
+      format: "mm/dd/yyyy"
     });
-    $('.dropdown-toggle').dropdown();
+
+    // Data lookup request handler for weather information
+    $("#weather-submit").click(function() {
+      var variable = $("#weather-var-selector").val();
+      var date = $("#weather-datepicker").val();
+      switch (variable) {
+        case "Solar Rad.":
+          variable = "srad";
+          break;
+        case "Max Temp.":
+          variable = "tmax";
+          break;
+        case "Min Temp.":
+          variable = "tmin";
+          break;
+        case "Rain":
+          variable = "rain";
+          break;
+        case "Wind":
+          variable = "wind";
+        default:
+      }
+      console.log("Ajax call for:")
+      console.log(date);
+      console.log(variable);
+      $.ajax({
+        url: "/lookup",
+        type: "POST",
+        data: {
+          date:   date,
+          variable:   variable
+        },
+        success: function(result){
+          console.log(result);
+        }
+      });
+    });
   </script>
 </body>
 

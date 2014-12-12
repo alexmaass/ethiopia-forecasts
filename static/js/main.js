@@ -83,17 +83,6 @@ $(document).ready(function(){
 
   // Load map div
   $("#map-canvas").show();
-
-  // Menu sliding
-  $("#sidebar .section-header").click(function(){
-      //slide up all the link lists
-      $("#sidebar ul .section-list").slideUp();
-      //slide down the link list below the h3 clicked - only if its closed
-      if(!$(this).next().is(":visible"))
-      {
-          $(this).next().slideDown();
-      }
-  })
 });  
 
 // $( "#testing-brand" ).click(function() {

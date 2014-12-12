@@ -68,13 +68,26 @@ def main():
 @application.route('/lookup', methods=['POST'])
 def lookup():
   # Parse arguments
-  date = datetime.datetime.strptime(request.form['date'], "%Y-%m-%d").date()
-  datatype = request.form['datatype'] 
-  print date, datatype
+  date = datetime.datetime.strptime(request.form['date'], "%m/%d/%Y").date()
+  variable = request.form['variable'] 
+  print date, variable
   # Database query 
   try:
     start = time.clock()
-    results = Weather.query.with_entities(Weather.wareda, Weather.tmax).filter_by(date = date).all()
+    # Switch statement for fields
+    results = []
+    if (variable == "srad"):
+      results = Weather.query.with_entities(Weather.wareda, Weather.srad).filter_by(date = date).all()
+    elif (variable == "tmax"):
+      results = Weather.query.with_entities(Weather.wareda, Weather.tmax).filter_by(date = date).all()
+    elif (variable == "tmin"):
+      results = Weather.query.with_entities(Weather.wareda, Weather.tmin).filter_by(date = date).all()
+    elif (variable == "rain"):
+      results = Weather.query.with_entities(Weather.wareda, Weather.rain).filter_by(date = date).all()
+    elif (variable == "wind"):
+      results = Weather.query.with_entities(Weather.wareda, Weather.wind).filter_by(date = date).all()
+    else:
+      print "Variable requested not recognized"
     print "Query time: " + str(time.clock() - start)
     json_dict = {}
     for result in results:
