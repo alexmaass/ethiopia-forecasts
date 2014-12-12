@@ -27,7 +27,7 @@
         <!-- Mode Selector -->
         <li>
           <div class="btn-group" role="group" id="mode-select">
-            <button type="button" class="btn btn-default" style="background: #2A2A2A;">Map</button>
+            <button type="button" class="btn btn-default" style="background: #337ab7;">Map</button>
             <button type="button" class="btn btn-default">Table</button>
           </div>
         </li>
@@ -196,21 +196,27 @@
             var blue;
             // console.log(feature.getProperty('EASE_W6ID'));
             var ease_w6id = parseInt(feature.getProperty('EASE_W6ID'));
+            // Data found
             if (json.hasOwnProperty(ease_w6id)) {
               value = json[ease_w6id];
               f = (value - min) / (max-min);
               blue = parseInt(f * 255, 10);
               red = parseInt((1-f) * 255, 10);
               color = rgbToHex(red, 0, blue);
+              return {
+                fillColor: color,
+                strokeColor: color,
+                strokeWeight: 1
+              };
             }
+            // No data found
             else {
-              color = '#FFFFFF';
+              return {
+                fillColor: 'transparent',
+                strokeColor: 'white',
+                strokeWeight: 1
+              };
             }
-            return {
-              fillColor: color,
-              strokeColor: color,
-              strokeWeight: 1
-            };
           });
 
           $("#loading-canvas").hide();
