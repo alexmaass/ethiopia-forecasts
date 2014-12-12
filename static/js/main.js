@@ -39,11 +39,11 @@ $(document).ready(function(){
   // Color each wareda
   map.data.setStyle(function(feature) {
     // Determine the color needed
-    var area = feature.getProperty('Area_km2');
-    var color = area > 1000.0 ? 'blue' : 'red';
+    // var area = feature.getProperty('Area_km2');
+    // var color = area > 1000.0 ? 'blue' : 'red';
     return {
-      fillColor: color,
-      strokeColor: color,
+      fillColor: "#FFFFFF",
+      strokeColor: "#FFFFFF",
       strokeWeight: 1
     };
   });
@@ -58,8 +58,9 @@ $(document).ready(function(){
     infowindow.setContent(name);
     if (json != null && ease_w6id in json) {
       var val = json[ease_w6id].toString();
-      val = name + ': ' + val; 
-      console.log(val);
+      // val = name + '<br>' + variable + ": " + val; 
+      val = name + ": " + val; 
+      // console.log(val);
       infowindow.setContent(val);
     }
     infowindow.setPosition(event.latLng);
