@@ -8,8 +8,8 @@ var infoWindow;
 var geoJsonObjects;
 var infowindow;
 var map;
-var datatype = "RAIN";
-var date = "1981-01-01";
+var variable;
+var date;
 var json = null;
 var mapdata = null;
 
@@ -81,8 +81,13 @@ $(document).ready(function(){
     map.data.revertStyle();
   });
 
-  // Load map div
-  $("#map-canvas").show();
+  // Only show map after fully loaded
+  // $("#map-canvas").show();
+  // $("#loading-canvas").hide();
+  google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+    // do something only the first time the map is loaded
+    $("#loading-canvas").hide();
+  });
 });  
 
 // $( "#testing-brand" ).click(function() {

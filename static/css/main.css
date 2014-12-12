@@ -43,9 +43,10 @@ html, body {
 #loading-canvas {
   height: 100%;
   width: 100%;
-  /*background: transparent url(../img/loading_clear.gif) no-repeat center center;*/
-  background: black center center;
+  background: #CCC url(../img/loading_clear.gif) no-repeat center center;
+  /*background: black center center;*/
   position: relative;
+  z-index: 1000;
 }
 
 #wrapper {

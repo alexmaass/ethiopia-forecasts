@@ -105,8 +105,8 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
       <div class="col-lg-12">
-        <div id="map-canvas" style="display:none;"></div>
         <div id="loading-canvas"></div>
+        <div id="map-canvas"></div>
       </div>
     </div>
     <!-- End Page Content -->
@@ -140,8 +140,9 @@
 
     // Data lookup request handler for weather information
     $("#weather-submit").click(function() {
-      var variable = $("#weather-var-selector").val();
-      var date = $("#weather-datepicker").val();
+      $("#loading-canvas").show();
+      variable = $("#weather-var-selector").val();
+      date = $("#weather-datepicker").val();
       switch (variable) {
         case "Solar Rad.":
           variable = "srad";
@@ -159,9 +160,6 @@
           variable = "wind";
         default:
       }
-      console.log("Ajax call for:")
-      console.log(date);
-      console.log(variable);
       $.ajax({
         url: "/lookup",
         type: "POST",
@@ -170,7 +168,10 @@
           variable:   variable
         },
         success: function(result){
-          console.log(result);
+          json = JSON && JSON.parse(result) || $.parseJSON(result);
+          console.log("Response complete");
+          $("#loading-canvas").hide();
+          // console.log(result);
         }
       });
     });
