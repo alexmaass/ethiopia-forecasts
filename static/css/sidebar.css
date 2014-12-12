@@ -35,7 +35,7 @@
 
 #mode-select button {
   width: 125px;
-  border-radius: 0 0 0 0;
+  /*border-radius: 0 0 0 0;*/
   /*background: black;*/
   /*background: #1A1A1A;*/
   background: transparent;
@@ -99,18 +99,6 @@
   border-left: 5px solid #337ab7;
 }
 
-/* Section list dropdowns */
-#sidebar ul ul li li{
-  color: black;
-  background: white;
-  display: list-item;
-}
-#sidebar ul ul li li:hover{
-  background: #EEE;
-  border-left: 0px;
-}
-
-
 /*Lets hide the non active LIs by default*/
 #sidebar ul .section-list {
   display: none;
@@ -118,31 +106,6 @@
 
 #sidebar li.active ul {
   display: relative;
-}
-
-.weather-select {
-  float: right;
-  color: black;
-}
-
-.weather-field-select {
-  float: right;
-  height: 27px;
-  width: 120px;
-  background: white;
-  color: black;
-  border-radius: 0 0 0 0;
-  text-align: right;
-}
-
-.open > .dropdown-menu {
-  display: list-item;
-  z-index: 100;
-  color: black;
-}
-
-.weather-field-select.dropdown-menu {
-  color: black;
 }
 
 .datepicker {
@@ -153,9 +116,26 @@
   background: white;
   color: black;
   text-align: center;
+  border-radius: 0;
+  border: 1px;
+  border-color: black;
 }
 
 .datepicker.dropdown-menu table {
   background: white;
+}
+
+.weather-field-selector {
+  float: right;
+  height: 27px;
+  width: 120px;
+  background: white;
+  color: black;
   text-align: center;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  border: 1px;
+  border-color: black;
 }
