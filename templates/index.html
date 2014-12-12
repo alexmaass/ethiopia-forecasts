@@ -2,101 +2,124 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A fertilizer usage profitability forecast tool for Ethiopian agriculture">
-    <meta name="author" content="Alex Maass">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A fertilizer usage profitability forecast tool for Ethiopian agriculture">
+  <meta name="author" content="Alex Maass">
 
-    <title>AgroEthiopia</title>
+  <title>AgroEthiopia</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins/bootstrap.min.css') }}">
-<!--     <link rel="stylesheet" href="{{ url_for('static', filename='css/simple-sidebar.css') }}"> -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 
 <body>
-    <div id="wrapper">
-        <!-- Sidebar -->
-        <div id="accordian">
-            <ul>
-                <li>
-                    <div id="brand"><span class="glyphicon glyphicon-tree-conifer"></span> AgroEthiopia</div>
-                </li>
-                <li>
-                    <div class="btn-group" role="group" id="mode-select">
-                        <button type="button" class="btn btn-default">Map</button>
-                        <button type="button" class="btn btn-default">Table</button>
-                    </div>
-                </li>
-                <li>
-                    <h3><span class="glyphicon glyphicon-cloud"></span>Weather</h3>
-                    <ul>
-                        <li>Date <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/01/1980"></input></li>
-                        <li>
-                            Field 
-                            <div class="btn-group field-select">
-                                <button type="button" class="btn btn-default dropdown-toggle btn-field-select" data-toggle="dropdown" aria-expanded="false">
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>Option 1</li>
-                                    <li>Another action</li>
-                                    <li>Something else here</li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <h3><span class="glyphicon glyphicon-globe"></span>Soil</h3>
-                    <ul>
-                        <li>Today's tasks</li>
-                        <li>Urgent</li>
-                        <li>Overdues</li>
-                        <li>Recurring</li>
-                        <li>Settings</li>
-                    </ul>
-                </li>
-                <li>
-                    <h3><span class="glyphicon glyphicon-usd"></span>Profitability</h3>
-                    <ul>
-                        <li><a href="#">Current Month</a></li>
-                        <li><a href="#">Current Week</a></li>
-                        <li><a href="#">Previous Month</a></li>
-                        <li><a href="#">Previous Week</a></li>
-                        <li><a href="#">Next Month</a></li>
-                        <li><a href="#">Next Week</a></li>
-                        <li><a href="#">Team Calendar</a></li>
-                        <li><a href="#">Private Calendar</a></li>
-                        <li><a href="#">Settings</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <!-- End Sidebar -->
-        <!-- Page Content -->
-<!--         <div id="page-content-wrapper">
-            <div class="col-lg-12">
-                <div id="map-canvas" style="display:none;"></div>
-                <div id="loading-canvas"></div>
-            </div>
-        </div> -->
-        <!-- End Page Content -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <ul>
+        <!-- Title Brand -->
+        <li>
+          <div id="sidebar-title"><span class="glyphicon glyphicon-tree-conifer"></span> AgroEthiopia</div>
+        </li>
+        <!-- Mode Selector -->
+        <li>
+          <div class="btn-group" role="group" id="mode-select">
+            <button type="button" class="btn btn-default">Map</button>
+            <button type="button" class="btn btn-default">Table</button>
+          </div>
+        </li>
+        <!-- Sections -->
+        <li>
+          <div class="section-header">
+            <span class="glyphicon glyphicon-cloud"></span>Weather
+          </div>
+          <ul class="section-list">
+            <li>
+              Date 
+              <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/01/1980"></input>
+            </li>
+            <li>
+              Field 
+              <select class="form control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>  
+              <!-- <div class="btn-group weather-select">
+                <button type="button" class="btn btn-default dropdown-toggle weather-field-select" data-toggle="dropdown" aria-expanded="false">
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li>Option 1</li>
+                  <li>Another action</li>
+                  <li>Something else here</li>
+                </ul>
+              </div> -->
+            </li>
+          </ul>
+        </li>
+
+
+        <li>
+          <div class="section-header">
+            <span class="glyphicon glyphicon-globe"></span>Soil
+          </div>
+          <ul class="section-list">
+            <li>Today's tasks</li>
+            <li>Urgent</li>
+            <li>Overdues</li>
+            <li>Recurring</li>
+            <li>Settings</li>
+          </ul>
+        </li>
+
+
+        <li>
+          <div class="section-header">
+            <span class="glyphicon glyphicon-usd"></span>Profitability
+          </div>
+          <ul class="section-list">
+            <li>Current Month</li>
+            <li>Current Week</li>
+            <li>Previous Month</li>
+            <li>Previous Week</li>
+            <li>Next Month</li>
+            <li>Next Week</li>
+            <li>Team Calendar</li>
+            <li>Private Calendar</li>
+            <li>Settings</li>
+          </ul>
+        </li>
+      </ul>
     </div>
-    <script src="{{ url_for('static', filename='js/plugins/jquery-1.11.1.min.js') }}"></script>       
-    <script src="{{ url_for('static', filename='js/plugins/bootstrap.min.js') }}"></script>   
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script src="http://d3js.org/topojson.v1.min.js"></script>   
-    <script src="{{ url_for('static', filename='js/plugins/bootstrap-datepicker.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script>
-        // Datepicker JS
-        $('.datepicker').datepicker({
-            autoclose: true
-        });
-        $('.dropdown-toggle').dropdown();
-    </script>
+    <!-- End Sidebar -->
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="col-lg-12">
+        <div id="map-canvas" style="display:none;"></div>
+        <div id="loading-canvas"></div>
+      </div>
+    </div>
+    <!-- End Page Content -->
+  </div>
+  <script src="{{ url_for('static', filename='js/plugins/jquery-1.11.1.min.js') }}"></script>       
+  <script src="{{ url_for('static', filename='js/plugins/bootstrap.min.js') }}"></script>   
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>   
+  <script src="{{ url_for('static', filename='js/plugins/bootstrap-datepicker.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script>
+    // Datepicker JS
+    $('.datepicker').datepicker({
+      autoclose: true
+    });
+    $('.dropdown-toggle').dropdown();
+  </script>
 </body>
 
 </html>

@@ -15,78 +15,79 @@ var mapdata = null;
 
 // Loading of the wareda map
 $(document).ready(function(){
-  // $('.dropdown-toggle').dropdown();
-  
-  // // Build the google maps base
-  // var myLatlng = new google.maps.LatLng(9.195761, 40.498867);
-  // var mapOptions = {
-  //   zoom: 7,
-  //   center: myLatlng,
-  //   mapTypeId: google.maps.MapTypeId.HYBRID,
-  //   scaleControl: true,
-  //   backgroundColor: 'transparent'
-  // };
-  // map = new google.maps.Map($('#map-canvas')[0], mapOptions);
-  // map.setTilt(0);
+  // Build the google maps base
+  var myLatlng = new google.maps.LatLng(9.195761, 40.498867);
+  var mapOptions = {
+    zoom: 7,
+    center: myLatlng,
+    mapTypeId: google.maps.MapTypeId.HYBRID,
+    scaleControl: true,
+    backgroundColor: 'transparent',
+    panControl: false,
+    streetViewControl: false,
+    zoomControl: false 
+  };
+  map = new google.maps.Map($('#map-canvas')[0], mapOptions);
+  map.setTilt(0);
 
-  // // TopoJson rendering
-  // $.getJSON("../static/maps/ethiopia_waredas_full_topo.json", function(data){
-  //       geoJsonObjects = topojson.feature(data, data.objects.ethiopia_waredas_full_converted_min)
-  //       map.data.addGeoJson(geoJsonObjects); 
-  // }); 
+  // TopoJson rendering
+  $.getJSON("../static/maps/ethiopia_waredas_full_topo.json", function(data){
+        geoJsonObjects = topojson.feature(data, data.objects.ethiopia_waredas_full_converted_min)
+        map.data.addGeoJson(geoJsonObjects); 
+  }); 
 
-  // // Color each letter gray. Change the color when the isColorful property
-  // // is set to true.
-  // map.data.setStyle(function(feature) {
-  //   // Determine the color needed
-  //   var area = feature.getProperty('Area_km2');
-  //   var color = area > 1000.0 ? 'blue' : 'red';
-  //   return {
-  //     fillColor: color,
-  //     strokeColor: color,
-  //     strokeWeight: 1
-  //   };
-  // });
-  // // Set up the info window
-  // infowindow = new google.maps.InfoWindow({});
-  // // When a wareda is clicked, display pertinent information.
-  // map.data.addListener('click', function(event) {
-  //   // event.feature.setProperty('isColorful', true);
-  //   var name = event.feature.getProperty('name');
-  //   var ease_w6id = parseInt(event.feature.getProperty('EASE_W6ID'));
-  //   // Set window content
-  //   infowindow.setContent(name);
-  //   if (json != null && ease_w6id in json) {
-  //     var val = json[ease_w6id];
-  //     console.log(val);
-  //     infowindow.setContent(val.toString());
-  //   }
-  //   infowindow.setPosition(event.latLng);
-  //   infowindow.open(map);
-  // });
+  // Color each letter gray. Change the color when the isColorful property
+  // is set to true.
+  map.data.setStyle(function(feature) {
+    // Determine the color needed
+    var area = feature.getProperty('Area_km2');
+    var color = area > 1000.0 ? 'blue' : 'red';
+    return {
+      fillColor: color,
+      strokeColor: color,
+      strokeWeight: 1
+    };
+  });
+  // Set up the info window
+  infowindow = new google.maps.InfoWindow({});
+  // When a wareda is clicked, display pertinent information.
+  map.data.addListener('click', function(event) {
+    // event.feature.setProperty('isColorful', true);
+    var name = event.feature.getProperty('name');
+    var ease_w6id = parseInt(event.feature.getProperty('EASE_W6ID'));
+    // Set window content
+    infowindow.setContent(name);
+    if (json != null && ease_w6id in json) {
+      var val = json[ease_w6id];
+      console.log(val);
+      infowindow.setContent(val.toString());
+    }
+    infowindow.setPosition(event.latLng);
+    infowindow.open(map);
+  });
 
-  // // When the user hovers, tempt them to click by outlining the letters.
-  // // Call revertStyle() to remove all overrides. This will use the style rules
-  // // defined in the function passed to setStyle()
-  // map.data.addListener('mouseover', function(event) {
-  //   map.data.revertStyle();
-  //   map.data.overrideStyle(event.feature, {
-  //     fillOpacity: 1
-  //     // strokeWeight: 8
-  //   });
-  // });
+  // When the user hovers, tempt them to click by outlining the letters.
+  // Call revertStyle() to remove all overrides. This will use the style rules
+  // defined in the function passed to setStyle()
+  map.data.addListener('mouseover', function(event) {
+    map.data.revertStyle();
+    map.data.overrideStyle(event.feature, {
+      fillOpacity: 1
+      // strokeWeight: 8
+    });
+  });
 
-  // map.data.addListener('mouseout', function(event) {
-  //   map.data.revertStyle();
-  // });
+  map.data.addListener('mouseout', function(event) {
+    map.data.revertStyle();
+  });
 
-  // // Load map div
-  // $("#map-canvas").show();
+  // Load map div
+  $("#map-canvas").show();
 
   // Menu sliding
-  $("#accordian h3").click(function(){
+  $("#sidebar .section-header").click(function(){
       //slide up all the link lists
-      $("#accordian ul ul").slideUp();
+      $("#sidebar ul .section-list").slideUp();
       //slide down the link list below the h3 clicked - only if its closed
       if(!$(this).next().is(":visible"))
       {

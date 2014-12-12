@@ -1,0 +1,161 @@
+/*Sidebar wrapper*/
+#sidebar {
+  /*width: 250px;*/
+  /*height: 100%;*/
+  /*background: #000;*/
+  /*background: #004050;*/
+  z-index: 3;
+  position: fixed;
+  left: 250px;
+  margin-left: -250px;
+  width: 250px;
+  overflow-y: auto;
+  background: #1A1A1A; 
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  color: white;
+  /*Some cool shadow and glow effect*/
+  box-shadow: 
+    0 5px 15px 1px rgba(0, 0, 0, 0.6), 
+    0 0 200px 1px rgba(255, 255, 255, 0.5);
+}
+
+/*heading styles*/
+#sidebar-title {
+  text-align: center;
+  font-size: 20px;
+  line-height: 50px;
+  margin: 0;
+  cursor: pointer;
+  /*background: #000;*/
+  /*background: #1A1A1A;*/
+}
+
+#mode-select button {
+  width: 125px;
+  border-radius: 0 0 0 0;
+  /*background: black;*/
+  /*background: #1A1A1A;*/
+  background: transparent;
+  font-size: 16px;
+  color: white;
+  /*border: #1A1A1A;*/
+}
+
+#mode-select button:hover {
+  background: #2A2A2A;
+}
+
+#sidebar .section-header {
+  font-size: 16px;
+  line-height: 34px;
+  margin: 0;
+  padding: 0 10px;
+  cursor: pointer;
+  /*gradient:*/
+  /*background: linear-gradient(#2A2A2A, #000000);*/
+}
+/*heading hover effect*/
+#sidebar .section-header:hover {
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.7);
+  /*background: #111;*/
+  background: #2A2A2A;
+  /*border-left: 5px solid lightgreen;*/
+  border-left: 5px solid #337ab7;
+}
+/*iconfont styles*/
+#sidebar .section-header span {
+  font-size: 18px;
+  margin-right: 10px;
+}
+/*list items*/
+#sidebar ul {
+  padding-left: 0;
+}
+
+#sidebar li {
+  list-style-type: none;
+}
+/* Section Lists*/
+#sidebar ul ul li{
+  /*color: lightgreen;*/
+  /*color: #337ab7;*/
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 27px;
+  display: block;
+  padding: 0 30px;
+  /*transition for smooth hover animation*/
+  transition: all 0.15s;
+}
+
+/*hover effect on links*/
+#sidebar ul ul li:hover {
+  background: #2A2A2A;
+  /*border-left: 5px solid lightgreen;*/
+  border-left: 5px solid #337ab7;
+}
+
+/* Section list dropdowns */
+#sidebar ul ul li li{
+  color: black;
+  background: white;
+  display: list-item;
+}
+#sidebar ul ul li li:hover{
+  background: #EEE;
+  border-left: 0px;
+}
+
+
+/*Lets hide the non active LIs by default*/
+#sidebar ul .section-list {
+  display: none;
+}
+
+#sidebar li.active ul {
+  display: relative;
+}
+
+.weather-select {
+  float: right;
+  color: black;
+}
+
+.weather-field-select {
+  float: right;
+  height: 27px;
+  width: 120px;
+  background: white;
+  color: black;
+  border-radius: 0 0 0 0;
+  text-align: right;
+}
+
+.open > .dropdown-menu {
+  display: list-item;
+  z-index: 100;
+  color: black;
+}
+
+.weather-field-select.dropdown-menu {
+  color: black;
+}
+
+.datepicker {
+  /*background: black;*/
+  float: right; 
+  height: 27px; 
+  width: 120px;
+  background: white;
+  color: black;
+  text-align: center;
+}
+
+.datepicker.dropdown-menu table {
+  background: white;
+  text-align: center;
+}
