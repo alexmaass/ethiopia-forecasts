@@ -12,7 +12,7 @@
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
 </head>
 
 <body>
@@ -20,18 +20,20 @@
     <!-- Sidebar -->
     <div id="sidebar">
       <ul>
-        <!-- Title Brand -->
+        <!-- Title Bar -->
         <li>
-          <div id="sidebar-title"><span class="glyphicon glyphicon-tree-conifer"></span> AgroEthiopia</div>
+          <!-- <div id="sidebar-title"><span class="glyphicon glyphicon-tree-conifer"></span> AgroEthiopia</div> -->
+          <div id="sidebar-title"><img src="{{ url_for('static', filename='img/acacia_tree_clear.png') }}" style="height:30px; width:40px;"> Profitability Forecast</div>
         </li>
         <!-- Mode Selector -->
         <li>
           <div class="btn-group" role="group" id="mode-select">
-            <button type="button" class="btn btn-default" style="background: #337ab7;">Map</button>
-            <button type="button" class="btn btn-default">Table</button>
+            <a type="button" class="btn btn-default" href="/map">Map</a>
+            <a type="button" class="btn btn-default" href="/table" style="background: #337ab7;">Table</a>
           </div>
         </li>
         <!-- Sections -->
+        <!-- Profitability Section -->
         <li>
           <div class="section-header">
             <span class="glyphicon glyphicon-usd"></span>Profitability
@@ -46,7 +48,7 @@
           </ul>
         </li>
 
-
+        <!-- Weather Data Section -->
         <li>
           <div class="section-header">
             <span class="glyphicon glyphicon-cloud"></span>Weather
@@ -74,8 +76,8 @@
           </ul>
         </li>
 
-
-        <li>
+        <!-- Soil Data Section (Not Implemented Correctly) -->
+        <!-- <li>
           <div class="section-header">
             <span class="glyphicon glyphicon-globe"></span>Soil
           </div>
@@ -98,15 +100,17 @@
               <button type="button" class="btn btn-default btn-submit" id="soil-submit">Submit</button>
             </li>
           </ul>
-        </li>
+        </li> -->
       </ul>
     </div>
     <!-- End Sidebar -->
     <!-- Page Content -->
     <div id="page-content-wrapper">
       <div class="col-lg-12">
+        <!-- Loading Background -->
         <div id="loading-canvas"></div>
-        <div id="map-canvas"></div>
+        <!-- Loading of the map -->
+        <div id="table-canvas"></div>
       </div>
     </div>
     <!-- End Page Content -->
@@ -116,7 +120,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
   <script src="http://d3js.org/topojson.v1.min.js"></script>   
   <script src="{{ url_for('static', filename='js/plugins/bootstrap-datepicker.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<!--   // <script src="{{ url_for('static', filename='js/map.js') }}"></script> -->
   <script>
     // Menu sliding
     $("#sidebar .section-header").click(function(){
@@ -140,9 +144,12 @@
 
     // Data lookup request handler for weather information
     $("#weather-submit").click(function() {
-      $("#loading-canvas").show();
+      console.log("Something is happening");
+      // Get the values from the selector and the datepicker
       variable = $("#weather-var-selector").val();
       date = $("#weather-datepicker").val();
+      // Depending on which variable type is selected, rename to adhere to backend standard
+      console.log("Values were got");
       switch (variable) {
         case "Solar Rad.":
           variable = "srad";
@@ -160,6 +167,7 @@
           variable = "wind";
         default:
       }
+      // Do an AJAX request to fetch the desired data from the backend
       $.ajax({
         url: "/lookup",
         type: "POST",
@@ -168,64 +176,29 @@
           variable:   variable
         },
         success: function(result){
+          // If the data fetch is successful, parse the resulting data into JSON format
           json = JSON && JSON.parse(result) || $.parseJSON(result);
           console.log("Response complete");
-          // Building color gradient
-          var min = Number.MAX_VALUE;
-          var max = Number.MIN_VALUE;
-          var current;
-          for (var key in json) {
-            if (json.hasOwnProperty(key)) {
-              current = parseFloat(json[key]);
-              if (current < min) {
-                min = current;
-              }
-              if (current > max) {
-                max = current;
-              }
-            }
-          }
-          // console.log(json);
-          // Color each wareda
-          map.data.setStyle(function(feature) {
-            // Determine the color needed
-            var color;
-            var f;
-            var value;
-            var red;
-            var blue;
-            // console.log(feature.getProperty('EASE_W6ID'));
-            var ease_w6id = parseInt(feature.getProperty('EASE_W6ID'));
-            // Data found
-            if (json.hasOwnProperty(ease_w6id)) {
-              value = json[ease_w6id];
-              f = (value - min) / (max-min);
-              blue = parseInt(f * 255, 10);
-              red = parseInt((1-f) * 255, 10);
-              color = rgbToHex(red, 0, blue);
-              return {
-                fillColor: color,
-                strokeColor: color,
-                strokeWeight: 1
-              };
-            }
-            // No data found
-            else {
-              return {
-                fillColor: 'transparent',
-                strokeColor: 'white',
-                strokeWeight: 1
-              };
-            }
-          });
-
-          $("#loading-canvas").hide();
-          // console.log(result);
+          // Building table
+          // tableCreate();
         }
       });
     });
+    function tableCreate(){
+      var tbl  = document.getElementById('table-canvas');
+      tbl.style.width  = '100px';
+      tbl.style.border = "1px solid black";
+      for (var key in json) {
+        if (json.hasOwnProperty(key)) {
+          var tr = tbl.insertRow();
+          var td = tr.insertCell();
+          td.appendChild(document.createTextNode(key));
+          td.appendChild(document.createTextNode(json[key]));
+          td.style.border = "1px solid black";
+        }
+      }
+    }
   </script>
 </body>
 
 </html>
-

@@ -6,9 +6,9 @@ import datetime, sys, time
 
 application = Flask(__name__)
 # Remote RDS db
-# application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://awsuser:projectdemeter@ethiopia-forecast-postgres.cnkrenytxftx.us-east-1.rds.amazonaws.com/ethiopia_forecast_db'
+application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://awsuser:projectdemeter@ethiopia-forecast-postgres.cnkrenytxftx.us-east-1.rds.amazonaws.com/ethiopia_forecast_db'
 # Local installation
-application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/amaass'
+# application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/amaass'
 
 db = SQLAlchemy(application)
 
@@ -72,12 +72,14 @@ def table():
 @application.route('/lookup', methods=['POST'])
 def lookup():
   # Parse arguments
+  print "Lookingup stuff"
   date = datetime.datetime.strptime(request.form['date'], "%m/%d/%Y").date()
   variable = request.form['variable'] 
   print date, variable
   # Database query 
   try:
     start = time.clock()
+    print "Getting past start"
     # Switch statement for fields
     results = []
     if (variable == "srad"):

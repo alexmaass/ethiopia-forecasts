@@ -1,9 +1,5 @@
 /*Sidebar wrapper*/
 #sidebar {
-  /*width: 250px;*/
-  /*height: 100%;*/
-  /*background: #000;*/
-  /*background: #004050;*/
   z-index: 3;
   position: fixed;
   left: 250px;
@@ -29,22 +25,21 @@
   line-height: 50px;
   margin: 0;
   cursor: pointer;
-  /*background: #000;*/
-  /*background: #1A1A1A;*/
 }
 
-#mode-select button {
+#mode-select {
+  display: inline;
+}
+
+#mode-select a {
+  display: inline;
   width: 125px;
-  /*border-radius: 0 0 0 0;*/
-  /*background: black;*/
-  /*background: #1A1A1A;*/
   background: transparent;
   font-size: 16px;
   color: white;
-  /*border: #1A1A1A;*/
 }
 
-#mode-select button:hover {
+#mode-select a:hover {
   background: #2A2A2A;
 }
 
@@ -54,15 +49,12 @@
   margin: 0;
   padding: 0 10px;
   cursor: pointer;
-  /*gradient:*/
-  /*background: linear-gradient(#2A2A2A, #000000);*/
 }
+
 /*heading hover effect*/
 #sidebar .section-header:hover {
   text-shadow: 0 0 1px rgba(255, 255, 255, 0.7);
-  /*background: #111;*/
   background: #2A2A2A;
-  /*border-left: 5px solid lightgreen;*/
   border-left: 5px solid #337ab7;
 }
 /*iconfont styles*/
@@ -80,8 +72,6 @@
 }
 /* Section Lists*/
 #sidebar ul ul li{
-  /*color: lightgreen;*/
-  /*color: #337ab7;*/
   color: white;
   text-decoration: none;
   font-size: 14px;
@@ -97,7 +87,6 @@
 /*hover effect on links*/
 #sidebar ul ul li:hover {
   background: #2A2A2A;
-  /*border-left: 5px solid lightgreen;*/
   border-left: 5px solid #337ab7;
 }
 
@@ -111,13 +100,11 @@
 }
 
 .datepicker {
-  /*background: black;*/
   float: right; 
   height: 27px; 
   width: 100px;
   background: white;
   color: black;
-  /*text-align: center;*/
   border-radius: 0;
   border: 1px;
   border-color: black;
@@ -133,7 +120,6 @@
   width: 100px;
   background: white;
   color: black;
-  /*text-align: center;*/
   border-radius: 0;
   -webkit-appearance: none;
   -moz-appearance: none;

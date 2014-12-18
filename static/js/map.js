@@ -102,26 +102,3 @@ function componentToHex(c) {
 function rgbToHex(r, g, b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
-
-
-// $( "#testing-brand" ).click(function() {
-//   // alert( "Handler for .click() called." );
-//   // Make an ajax call to get back relevant content
-//   $.ajax({
-//     url: "/lookup",
-//     type: "POST",
-//     data: {
-//       datatype: datatype,
-//       date: date
-//     },
-//     success: function(result){
-//       json = JSON && JSON.parse(result) || $.parseJSON(result);
-//     }
-//   });
-// });
-
-//Experimental KML rendering
-// var waredaLayer = new google.maps.KmlLayer({
-//   url: 'https://www.dropbox.com/s/ptq675yo6f2jrrp/ethiopia_waredas.kml'
-// });
-// waredaLayer.setMap(map);
