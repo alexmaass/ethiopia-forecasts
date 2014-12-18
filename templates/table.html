@@ -184,20 +184,44 @@
         }
       });
     });
+
+    // Function to create a table.
     function tableCreate(){
+      // Hides the placeholder text
       $("#table-placeholder").hide();
+      // Gets the table-canvas object
       var tbl  = document.getElementById('table-canvas');
-      tbl.style.width  = '100px';
+      tbl.style.width  = '100%';
       tbl.style.border = "1px solid black";
+      tbl.style.textAlign = "center";
+
+      // Creates the table header
+      var header = tbl.createTHead();
+      var th = header.insertRow();
+      var th1 = th.insertCell();
+      th1.appendChild(document.createTextNode("Woreda ID"));
+      th1.style.border = "1px solid black";
+      th1.style.width = "50%";
+      th1.style.fontWeight = "bold";
+      var th2 = th.insertCell();
+      var disp_variable = variable.charAt(0).toUpperCase() + variable.slice(1);
+      th2.appendChild(document.createTextNode(disp_variable));
+      th2.style.border = "1px solid black";
+      th2.style.width = "50%";
+      th2.style.fontWeight = "bold";
+
+      // For each mapping in the returned json object, create a row in the table.
       for (var key in json) {
         if (json.hasOwnProperty(key)) {
           var tr = tbl.insertRow();
           var td1 = tr.insertCell();
           td1.appendChild(document.createTextNode(key));
           td1.style.border = "1px solid black";
+          td1.style.width = "50%";
           var td2 = tr.insertCell();
           td2.appendChild(document.createTextNode(json[key]));
           td2.style.border = "1px solid black";
+          td2.style.width = "50%";
         }
       }
     }
