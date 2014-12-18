@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A fertilizer usage profitability forecast tool for Ethiopian agriculture">
+  <meta name="author" content="Alex Maass">
+
+  <title>AgroEthiopia</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
+<body>
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <ul>
+        <!-- Title Brand -->
+        <li>
+          <!-- <div id="sidebar-title"><span class="glyphicon glyphicon-tree-conifer"></span> AgroEthiopia</div> -->
+          <div id="sidebar-title"><img src="{{ url_for('static', filename='img/acacia_tree_clear.png') }}" style="height:30px; width:40px;"> Profitability Forecast</div>
+        </li>
+        <!-- Mode Selector -->
+        <li>
+          <div class="btn-group" role="group" id="mode-select">
+            <button type="button" class="btn btn-default" style="background: #337ab7;">Map</button>
+            <button type="button" class="btn btn-default">Table</button>
+          </div>
+        </li>
+        <!-- Sections -->
+        <li>
+          <div class="section-header">
+            <span class="glyphicon glyphicon-usd"></span>Profitability
+          </div>
+          <ul class="section-list">
+            <li>Current Month</li>
+            <li>Current Week</li>
+            <li>Current Year</li>
+            <li>Next Month</li>
+            <li>Next Week</li>
+            <li>Next Year</li>
+          </ul>
+        </li>
+
+
+        <li>
+          <div class="section-header">
+            <span class="glyphicon glyphicon-cloud"></span>Weather
+          </div>
+          <ul class="section-list">
+            <form>
+              <li>
+                Date 
+                <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/01/1980" id="weather-datepicker"></input>
+              </li>
+              <li>
+                Variable 
+                <select class="form control variable-selector" id="weather-var-selector">
+                  <option>Solar Rad.</option>
+                  <option>Max Temp.</option>
+                  <option>Min Temp.</option>
+                  <option>Rain</option>
+                  <option>Wind</option>
+                </select>  
+              </li>
+              <li>
+                <button type="button" class="btn btn-default btn-submit" id="weather-submit">Submit</button>
+              </li>
+            </form>
+          </ul>
+        </li>
+
+
+        <li>
+          <div class="section-header">
+            <span class="glyphicon glyphicon-globe"></span>Soil
+          </div>
+          <ul class="section-list">
+            <li>
+              Date 
+              <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/01/1980"></input>
+            </li>
+            <li>
+              Variable 
+              <select class="form control variable-selector" id="soil-var-selector">
+                <option>Solar Rad.</option>
+                <option>Max Temp.</option>
+                <option>Min Temp.</option>
+                <option>Rain</option>
+                <option>Wind</option>
+              </select>  
+            </li>
+            <li>
+              <button type="button" class="btn btn-default btn-submit" id="soil-submit">Submit</button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!-- End Sidebar -->
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="col-lg-12">
+        <div id="loading-canvas"></div>
+        <div id="map-canvas"></div>
+      </div>
+    </div>
+    <!-- End Page Content -->
+  </div>
+  <script src="{{ url_for('static', filename='js/plugins/jquery-1.11.1.min.js') }}"></script>       
+  <script src="{{ url_for('static', filename='js/plugins/bootstrap.min.js') }}"></script>   
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>   
+  <script src="{{ url_for('static', filename='js/plugins/bootstrap-datepicker.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script>
+    // Menu sliding
+    $("#sidebar .section-header").click(function(){
+        //slide up all the link lists
+        $("#sidebar ul .section-list").slideUp();
+        //slide down the link list below the h3 clicked - only if its closed
+        if(!$(this).next().is(":visible"))
+        {
+            $(this).next().slideDown();
+        }
+    })
+
+    // Datepicker JS
+    $('.datepicker').datepicker({
+      autoclose: true,
+      clearBtn: true,
+      // startDate: new Date(1980, 1, 1),    // Fix this. Doesnt properly render January.
+      // endDate: new Date(2010, 12, 31),
+      format: "mm/dd/yyyy"
+    });
+
+    // Data lookup request handler for weather information
+    $("#weather-submit").click(function() {
+      $("#loading-canvas").show();
+      variable = $("#weather-var-selector").val();
+      date = $("#weather-datepicker").val();
+      switch (variable) {
+        case "Solar Rad.":
+          variable = "srad";
+          break;
+        case "Max Temp.":
+          variable = "tmax";
+          break;
+        case "Min Temp.":
+          variable = "tmin";
+          break;
+        case "Rain":
+          variable = "rain";
+          break;
+        case "Wind":
+          variable = "wind";
+        default:
+      }
+      $.ajax({
+        url: "/lookup",
+        type: "POST",
+        data: {
+          date:   date,
+          variable:   variable
+        },
+        success: function(result){
+          json = JSON && JSON.parse(result) || $.parseJSON(result);
+          console.log("Response complete");
+          // Building color gradient
+          var min = Number.MAX_VALUE;
+          var max = Number.MIN_VALUE;
+          var current;
+          for (var key in json) {
+            if (json.hasOwnProperty(key)) {
+              current = parseFloat(json[key]);
+              if (current < min) {
+                min = current;
+              }
+              if (current > max) {
+                max = current;
+              }
+            }
+          }
+          // console.log(json);
+          // Color each wareda
+          map.data.setStyle(function(feature) {
+            // Determine the color needed
+            var color;
+            var f;
+            var value;
+            var red;
+            var blue;
+            // console.log(feature.getProperty('EASE_W6ID'));
+            var ease_w6id = parseInt(feature.getProperty('EASE_W6ID'));
+            // Data found
+            if (json.hasOwnProperty(ease_w6id)) {
+              value = json[ease_w6id];
+              f = (value - min) / (max-min);
+              blue = parseInt(f * 255, 10);
+              red = parseInt((1-f) * 255, 10);
+              color = rgbToHex(red, 0, blue);
+              return {
+                fillColor: color,
+                strokeColor: color,
+                strokeWeight: 1
+              };
+            }
+            // No data found
+            else {
+              return {
+                fillColor: 'transparent',
+                strokeColor: 'white',
+                strokeWeight: 1
+              };
+            }
+          });
+
+          $("#loading-canvas").hide();
+          // console.log(result);
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
+

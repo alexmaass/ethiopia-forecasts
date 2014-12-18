@@ -25,7 +25,11 @@ $(document).ready(function(){
     backgroundColor: 'transparent',
     panControl: false,
     streetViewControl: false,
-    zoomControl: false 
+    zoomControl: true,
+    zoomControlOptions: {
+      style: google.maps.ZoomControlStyle.DEFAULT,
+      position: google.maps.ControlPosition.RIGHT_TOP
+    } 
   };
   map = new google.maps.Map($('#map-canvas')[0], mapOptions);
   map.setTilt(0);

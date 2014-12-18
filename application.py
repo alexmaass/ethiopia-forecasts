@@ -6,9 +6,9 @@ import datetime, sys, time
 
 application = Flask(__name__)
 # Remote RDS db
-application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://awsuser:projectdemeter@ethiopia-forecast-postgres.cnkrenytxftx.us-east-1.rds.amazonaws.com/ethiopia_forecast_db'
+# application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://awsuser:projectdemeter@ethiopia-forecast-postgres.cnkrenytxftx.us-east-1.rds.amazonaws.com/ethiopia_forecast_db'
 # Local installation
-# application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/amaass'
+application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/amaass'
 
 db = SQLAlchemy(application)
 
@@ -61,9 +61,13 @@ class Weather(db.Model):
 #     return str(self.__dict__)
 
 @application.route('/')
-@application.route('/index.html')
-def main():
-  return render_template('index.html')
+@application.route('/map')
+def map():
+  return render_template('map.html')
+
+@application.route('/table')
+def table():
+  return render_template('table.html')
 
 @application.route('/lookup', methods=['POST'])
 def lookup():
