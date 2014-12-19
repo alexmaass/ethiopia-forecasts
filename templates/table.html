@@ -56,8 +56,12 @@
           <ul class="section-list">
             <form>
               <li>
-                Date 
-                <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/01/1980" id="weather-datepicker"></input>
+                Start Date 
+                <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/01/1980" id="weather-datepicker-start"></input>
+              </li>
+              <li>
+                End Date 
+                <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/11/1980" id="weather-datepicker-end"></input>
               </li>
               <li>
                 Variable 
@@ -108,7 +112,7 @@
     <div id="page-content-wrapper">
       <div class="col-lg-12">
         <!-- Loading Background -->
-        <!-- <div id="loading-canvas"></div> -->
+        <div id="loading-canvas" style="display: none;"></div>
         <!-- Loading of the table -->
         <table id="table-canvas">  
           <h3 id="table-placeholder" style="text-align: center;">Please select the data you would like to view from the sidebar on the left</h3>
@@ -144,45 +148,59 @@
       format: "mm/dd/yyyy"
     });
 
-    // Data lookup request handler for weather information
+// Data lookup request handler for weather information
     $("#weather-submit").click(function() {
       // Get the values from the selector and the datepicker
       variable = $("#weather-var-selector").val();
-      date = $("#weather-datepicker").val();
-      // Depending on which variable type is selected, rename to adhere to backend standard
-      switch (variable) {
-        case "Solar Rad.":
-          variable = "srad";
-          break;
-        case "Max Temp.":
-          variable = "tmax";
-          break;
-        case "Min Temp.":
-          variable = "tmin";
-          break;
-        case "Rain":
-          variable = "rain";
-          break;
-        case "Wind":
-          variable = "wind";
-        default:
+      start_date = $("#weather-datepicker-start").val();
+      end_date = $("#weather-datepicker-end").val();
+      var d1 = Date.parse(start_date);
+      console.log(d1.toString());
+      var d2 = Date.parse(end_date);
+      console.log(d2.toString());
+      if (d1 > d2) {
+          alert ("Error: Start date precedes end date");
       }
-      // Do an AJAX request to fetch the desired data from the backend
-      $.ajax({
-        url: "/lookup",
-        type: "POST",
-        data: {
-          date:   date,
-          variable:   variable
-        },
-        success: function(result){
-          // If the data fetch is successful, parse the resulting data into JSON format
-          json = JSON && JSON.parse(result) || $.parseJSON(result);
-          console.log("Response complete");
-          // Building table
-          tableCreate();
+      else {
+        // Covers up the map with loading screen while the data is collected & processed
+        $("#loading-canvas").show();
+        // Depending on which variable type is selected, rename to adhere to backend standard
+        switch (variable) {
+          case "Solar Rad.":
+            variable = "srad";
+            break;
+          case "Max Temp.":
+            variable = "tmax";
+            break;
+          case "Min Temp.":
+            variable = "tmin";
+            break;
+          case "Rain":
+            variable = "rain";
+            break;
+          case "Wind":
+            variable = "wind";
+          default:
         }
-      });
+        // Do an AJAX request to fetch the desired data from the backend
+        $.ajax({
+          url: "/lookup",
+          type: "POST",
+          data: {
+            start_date:   start_date,
+            end_date:     end_date, 
+            variable:     variable
+          },
+          success: function(result){
+            // If the data fetch is successful, parse the resulting data into JSON format
+            json = JSON && JSON.parse(result) || $.parseJSON(result);
+            console.log("Response complete");
+            tableCreate();
+            // Hide the loading canvas to reveal the updated map
+            $("#loading-canvas").hide();
+          }
+        });
+      }
     });
 
     // Function to create a table.

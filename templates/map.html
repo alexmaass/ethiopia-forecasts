@@ -56,8 +56,12 @@
           <ul class="section-list">
             <form>
               <li>
-                Date 
-                <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/01/1980" id="weather-datepicker"></input>
+                Start Date 
+                <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/01/1980" id="weather-datepicker-start"></input>
+              </li>
+              <li>
+                End Date 
+                <input class="datepicker" data-date-format="mm/dd/yyyy" value="01/11/1980" id="weather-datepicker-end"></input>
               </li>
               <li>
                 Variable 
@@ -144,91 +148,103 @@
 
     // Data lookup request handler for weather information
     $("#weather-submit").click(function() {
-      // Covers up the map with loading screen while the data is collected & processed
-      $("#loading-canvas").show();
       // Get the values from the selector and the datepicker
       variable = $("#weather-var-selector").val();
-      date = $("#weather-datepicker").val();
-      // Depending on which variable type is selected, rename to adhere to backend standard
-      switch (variable) {
-        case "Solar Rad.":
-          variable = "srad";
-          break;
-        case "Max Temp.":
-          variable = "tmax";
-          break;
-        case "Min Temp.":
-          variable = "tmin";
-          break;
-        case "Rain":
-          variable = "rain";
-          break;
-        case "Wind":
-          variable = "wind";
-        default:
+      start_date = $("#weather-datepicker-start").val();
+      end_date = $("#weather-datepicker-end").val();
+      var d1 = Date.parse(start_date);
+      console.log(d1.toString());
+      var d2 = Date.parse(end_date);
+      console.log(d2.toString());
+      if (d1 > d2) {
+          alert ("Error: Start date precedes end date");
       }
-      // Do an AJAX request to fetch the desired data from the backend
-      $.ajax({
-        url: "/lookup",
-        type: "POST",
-        data: {
-          date:   date,
-          variable:   variable
-        },
-        success: function(result){
-          // If the data fetch is successful, parse the resulting data into JSON format
-          json = JSON && JSON.parse(result) || $.parseJSON(result);
-          console.log("Response complete");
-          // Building color gradient
-          var min = Number.MAX_VALUE;
-          var max = Number.MIN_VALUE;
-          var current;
-          for (var key in json) {
-            if (json.hasOwnProperty(key)) {
-              current = parseFloat(json[key]);
-              if (current < min) {
-                min = current;
-              }
-              if (current > max) {
-                max = current;
-              }
-            }
-          }
-          // Color each wareda
-          map.data.setStyle(function(feature) {
-            // Determine the color needed
-            var color;
-            var f;
-            var value;
-            var red;
-            var blue;
-            var ease_w6id = parseInt(feature.getProperty('EASE_W6ID'));
-            // Data found
-            if (json.hasOwnProperty(ease_w6id)) {
-              value = json[ease_w6id];
-              f = (value - min) / (max-min);
-              blue = parseInt(f * 255, 10);
-              red = parseInt((1-f) * 255, 10);
-              color = rgbToHex(red, 0, blue);
-              return {
-                fillColor: color,
-                strokeColor: color,
-                strokeWeight: 1
-              };
-            }
-            // No data found
-            else {
-              return {
-                fillColor: 'transparent',
-                strokeColor: 'white',
-                strokeWeight: 1
-              };
-            }
-          });
-          // Hide the loading canvas to reveal the updated map
-          $("#loading-canvas").hide();
+      else {
+        // Covers up the map with loading screen while the data is collected & processed
+        $("#loading-canvas").show();
+        // Depending on which variable type is selected, rename to adhere to backend standard
+        switch (variable) {
+          case "Solar Rad.":
+            variable = "srad";
+            break;
+          case "Max Temp.":
+            variable = "tmax";
+            break;
+          case "Min Temp.":
+            variable = "tmin";
+            break;
+          case "Rain":
+            variable = "rain";
+            break;
+          case "Wind":
+            variable = "wind";
+          default:
         }
-      });
+        // Do an AJAX request to fetch the desired data from the backend
+        $.ajax({
+          url: "/lookup",
+          type: "POST",
+          data: {
+            start_date:   start_date,
+            end_date:     end_date, 
+            variable:     variable
+          },
+          success: function(result){
+            // If the data fetch is successful, parse the resulting data into JSON format
+            json = JSON && JSON.parse(result) || $.parseJSON(result);
+            console.log(json);
+            console.log("Response complete");
+            // Building color gradient
+            var min = Number.MAX_VALUE;
+            var max = Number.MIN_VALUE;
+            var current;
+            for (var key in json) {
+              if (json.hasOwnProperty(key)) {
+                current = parseFloat(json[key]);
+                if (current < min) {
+                  min = current;
+                }
+                if (current > max) {
+                  max = current;
+                }
+              }
+            }
+            // Color each wareda
+            map.data.setStyle(function(feature) {
+              // Determine the color needed
+              var color;
+              var f;
+              var value;
+              var red;
+              var blue;
+              var ease_w6id = parseInt(feature.getProperty('EASE_W6ID'));
+              // Data found
+              if (json.hasOwnProperty(ease_w6id)) {
+                value = json[ease_w6id];
+                f = (value - min) / (max-min);
+                blue = parseInt(f * 255, 10);
+                red = parseInt((1-f) * 255, 10);
+                color = rgbToHex(red, 0, blue);
+                return {
+                  fillColor: color,
+                  strokeColor: color,
+                  strokeWeight: 1
+                };
+              }
+              // No data found
+              else {
+                return {
+                  fillColor: 'transparent',
+                  strokeColor: 'white',
+                  strokeWeight: 1
+                };
+              }
+            });
+            // Hide the loading canvas to reveal the updated map
+            $("#loading-canvas").hide();
+          }
+        });
+      }
     });
   </script>
 </body>

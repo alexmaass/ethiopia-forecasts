@@ -72,31 +72,57 @@ def table():
 @application.route('/lookup', methods=['POST'])
 def lookup():
   # Parse arguments
-  print "Lookingup stuff"
-  date = datetime.datetime.strptime(request.form['date'], "%m/%d/%Y").date()
+  start_date = datetime.datetime.strptime(request.form['start_date'], "%m/%d/%Y").date()
+  end_date = datetime.datetime.strptime(request.form['end_date'], "%m/%d/%Y").date()
   variable = request.form['variable'] 
-  print date, variable
+  # print start_date, end_date, variable
   # Database query 
   try:
     start = time.clock()
     # Switch statement for fields
     results = []
+    # if (variable == "srad"):
+    #   results = Weather.query.with_entities(Weather.wareda, Weather.srad).filter_by(date = date).all()
+    # elif (variable == "tmax"):
+    #   results = Weather.query.with_entities(Weather.wareda, Weather.tmax).filter_by(date = date).all()
+    # elif (variable == "tmin"):
+    #   results = Weather.query.with_entities(Weather.wareda, Weather.tmin).filter_by(date = date).all()
+    # elif (variable == "rain"):
+    #   results = Weather.query.with_entities(Weather.wareda, Weather.rain).filter_by(date = date).all()
+    # elif (variable == "wind"):
+    #   results = Weather.query.with_entities(Weather.wareda, Weather.wind).filter_by(date = date).all()
+    # else:
+    #   print "Variable requested not recognized"
     if (variable == "srad"):
-      results = Weather.query.with_entities(Weather.wareda, Weather.srad).filter_by(date = date).all()
+      results = Weather.query.with_entities(Weather.wareda, Weather.srad).filter(Weather.date >= start_date).filter(Weather.date <= end_date).all()
     elif (variable == "tmax"):
-      results = Weather.query.with_entities(Weather.wareda, Weather.tmax).filter_by(date = date).all()
+      results = Weather.query.with_entities(Weather.wareda, Weather.tmax).filter(Weather.date >= start_date).filter(Weather.date <= end_date).all()
     elif (variable == "tmin"):
-      results = Weather.query.with_entities(Weather.wareda, Weather.tmin).filter_by(date = date).all()
+      results = Weather.query.with_entities(Weather.wareda, Weather.tmin).filter(Weather.date >= start_date).filter(Weather.date <= end_date).all()
     elif (variable == "rain"):
-      results = Weather.query.with_entities(Weather.wareda, Weather.rain).filter_by(date = date).all()
+      results = Weather.query.with_entities(Weather.wareda, Weather.rain).filter(Weather.date >= start_date).filter(Weather.date <= end_date).all()
     elif (variable == "wind"):
-      results = Weather.query.with_entities(Weather.wareda, Weather.wind).filter_by(date = date).all()
+      results = Weather.query.with_entities(Weather.wareda, Weather.wind).filter(Weather.date >= start_date).filter(Weather.date <= end_date).all()
     else:
       print "Variable requested not recognized"
     print "Query time: " + str(time.clock() - start)
+    # Process results to get an average
+    inter_dict = {}
     json_dict = {}
+    print "Number of items: " + str(len(results))
     for result in results:
-      json_dict[result[0]] = result[1]
+      if result[0] in json_dict:
+        inter_dict[result[0]] = inter_dict[result[0]] + [result[1]]
+      else:
+        inter_dict[result[0]] = [result[1]]
+    # Put into json_dict
+    for key in inter_dict:
+      summation = 0
+      count = 0
+      for item in inter_dict[key]:
+        summation+= float(item)
+        count+=1
+      json_dict[key] = str(summation/count)
     print "Number of waredas: " + str(len(json_dict))
     return json.dumps(json_dict)
   except:
