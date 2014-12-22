@@ -1,2 +1,9 @@
 http://www.mapshaper.org/
 topojson -o ethiopia_waredas_full_topo.json -p -- ethiopia_waredas_full_converted_min.json
+
+Processing Pipeline:
+KML from ArcGIS -> Postprocessing to clean up properties using mappparse.py in scripts folder ->
+conversion to GeoJSON -> Convertion from GeoJSON to topoJson
+
+Loading of topoJson on top of Google maps requires a special plugin:
+  <script src="http://d3js.org/topojson.v1.min.js"></script>   

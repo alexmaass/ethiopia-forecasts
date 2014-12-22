@@ -57,7 +57,7 @@
   background: #2A2A2A;
   border-left: 5px solid #337ab7;
 }
-/*iconfont styles*/
+
 #sidebar .section-header span {
   font-size: 18px;
   margin-right: 10px;
@@ -99,6 +99,7 @@
   display: relative;
 }
 
+/* Styling for the datapicker */
 .datepicker {
   float: right; 
   height: 27px; 

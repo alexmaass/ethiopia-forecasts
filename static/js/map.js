@@ -42,9 +42,7 @@ $(document).ready(function(){
 
   // Color each wareda
   map.data.setStyle(function(feature) {
-    // Determine the color needed
-    // var area = feature.getProperty('Area_km2');
-    // var color = area > 1000.0 ? 'blue' : 'red';
+    // Initialized to be all white
     return {
       fillColor: "#FFFFFF",
       strokeColor: "#FFFFFF",
@@ -55,30 +53,25 @@ $(document).ready(function(){
   infowindow = new google.maps.InfoWindow({});
   // When a wareda is clicked, display pertinent information.
   map.data.addListener('click', function(event) {
-    // event.feature.setProperty('isColorful', true);
     var name = event.feature.getProperty('name');
     var ease_w6id = parseInt(event.feature.getProperty('EASE_W6ID'));
     // Set window content
     infowindow.setContent(name);
     if (json != null && ease_w6id in json) {
       var val = json[ease_w6id].toString();
-      // val = name + '<br>' + variable + ": " + val; 
       val = name + ": " + val; 
-      // console.log(val);
       infowindow.setContent(val);
     }
+    // Define where the info window should be located
     infowindow.setPosition(event.latLng);
     infowindow.open(map);
   });
 
   // When the user hovers, tempt them to click by outlining the letters.
-  // Call revertStyle() to remove all overrides. This will use the style rules
-  // defined in the function passed to setStyle()
   map.data.addListener('mouseover', function(event) {
     map.data.revertStyle();
     map.data.overrideStyle(event.feature, {
       fillOpacity: 1
-      // strokeWeight: 8
     });
   });
 
@@ -88,6 +81,7 @@ $(document).ready(function(){
 
   // Only show map after fully loaded
   google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+    // Loading of the map means the hiding of the loading canvas, which is on top of the map. 
     $("#loading-canvas").hide();
   });
 });  

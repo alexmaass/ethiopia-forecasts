@@ -9,6 +9,7 @@ html, body {
   height: 100%;
 }
 
+/* The styling for the map div*/
 #map-canvas {
   height: 100%;
   width: 100%;
@@ -17,6 +18,7 @@ html, body {
   z-index: 10;
 }
 
+/* The styling for the loading div*/
 #loading-canvas {
   height: 100%;
   width: 100%;
